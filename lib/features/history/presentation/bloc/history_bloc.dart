@@ -1,19 +1,14 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:tik_tak_toe/core/domain/entities/player_data_enum.dart';
 import 'package:tik_tak_toe/features/game/domain/entities/difficulty_level.dart';
 import 'package:tik_tak_toe/features/history/domain/entities/history_data.dart';
-import 'dart:convert';
 
 part 'history_event.dart';
 part 'history_state.dart';
 
 class HistoryBloc extends HydratedBloc<HistoryEvent, HistoryState> {
-
-  List<HistoryData> historyData = [];
 
   HistoryBloc() : super(HistoryState()) {
     on<HistoryEvent>((event, emit) {
@@ -35,8 +30,10 @@ class HistoryBloc extends HydratedBloc<HistoryEvent, HistoryState> {
       difficultyLevel: event.difficultyLevel.name,
       date: DateTime.now().toString().substring(0,10),
     );
-    
+
+    List<HistoryData> historyData = state.historyData;
     historyData.add(tmp);
+
     emit(HistoryState(historyData: historyData));
   }
 
